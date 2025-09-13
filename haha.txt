@@ -6,8 +6,69 @@
 <body>
     <button id="toggleBtn">Generate Cube</button>
     <canvas id="canvas" width="500" height="500"></canvas>
-    <script src="basta.js"></script>
     <script>
+       const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+
+var _cubeShown = false;
+var _isAnimating = false;
+
+function clearCanvas(){
+ctx.clearRect(0, 0, 500, 500);
+ctx.fillStyle = 'pink';
+ctx.fillRect(0, 0, 500, 500);
+}
+
+function drawLine(x1, y1, x2, y2){
+ctx.beginPath();
+ctx.moveTo(x1, y1);
+ctx.lineTo(x2, y2);
+ctx.stroke();
+}
+
+function animateCube(){
+if (_isAnimating) return;
+_isAnimating = true;
+clearCanvas();
+
+
+setTimeout(() => drawLine(250, 225, 300, 250), 250);   
+setTimeout(() => drawLine(300, 250, 250, 275), 450);  
+setTimeout(() => drawLine(250, 275, 200, 250), 650);   
+setTimeout(() => drawLine(200, 250, 250, 225), 850);  
+
+
+setTimeout(() => drawLine(250, 160, 300, 185), 1000);  
+setTimeout(() => drawLine(300, 185, 250, 210), 1200);   
+setTimeout(() => drawLine(250, 210, 200, 185), 1400);   
+setTimeout(() => drawLine(200, 185, 250, 160), 1600);  
+
+
+setTimeout(() => drawLine(200, 185, 200, 250), 1800); 
+setTimeout(() => drawLine(250, 160, 250, 275), 2000);  
+setTimeout(() => drawLine(300, 185, 300, 250), 2200);  
+
+setTimeout(() => { _isAnimating = false; }, 2400);
+}
+
+function hideCube(){
+clearCanvas();
+}
+
+window.toggleDiamonds = function(){
+if (_isAnimating) return _cubeShown;
+_cubeShown = !_cubeShown;
+if (_cubeShown) {
+animateCube();
+} else {
+hideCube();
+}
+return _cubeShown;
+};
+
+clearCanvas();
+
         document.getElementById('toggleBtn').onclick = function(){
             var isShown = window.toggleDiamonds();
             this.textContent = isShown ? 'Hide Cube' : 'Generate Cube';
@@ -15,3 +76,4 @@
     </script>
 </body>
 </html>
+

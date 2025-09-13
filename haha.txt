@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Diamond</title>
+</head>
+<body>
+    <button id="toggleBtn">Generate Cube</button>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script src="basta.js"></script>
+    <script>
+        document.getElementById('toggleBtn').onclick = function(){
+            var isShown = window.toggleDiamonds();
+            this.textContent = isShown ? 'Hide Cube' : 'Generate Cube';
+        };
+    </script>
+</body>
+</html>

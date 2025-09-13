@@ -5,76 +5,90 @@
 </head>
 <body>
     <button id="toggleBtn">Generate Cube</button>
+    <br><br>
+    <label>Length: <input type="number" id="lenInput" value="100"></label>
+    <label>Height: <input type="number" id="heightInput" value="50"></label>
+    <label>Width: <input type="number" id="widthInput" value="50"></label>
     <canvas id="canvas" width="500" height="500"></canvas>
     <script>
        const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-
 var _cubeShown = false;
 var _isAnimating = false;
 
+// new adjustable values
+var cubeLength = 100;
+var cubeHeight = 50;
+var cubeWidth  = 50;
+
 function clearCanvas(){
-ctx.clearRect(0, 0, 500, 500);
-ctx.fillStyle = 'pink';
-ctx.fillRect(0, 0, 500, 500);
+    ctx.clearRect(0, 0, 500, 500);
+    ctx.fillStyle = 'pink';
+    ctx.fillRect(0, 0, 500, 500);
 }
 
 function drawLine(x1, y1, x2, y2){
-ctx.beginPath();
-ctx.moveTo(x1, y1);
-ctx.lineTo(x2, y2);
-ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
 }
 
 function animateCube(){
-if (_isAnimating) return;
-_isAnimating = true;
-clearCanvas();
+    if (_isAnimating) return;
+    _isAnimating = true;
+    clearCanvas();
 
+    let cx = 250, cy = 250; // center
+    let L = cubeLength/2, H = cubeHeight, W = cubeWidth/2;
 
-setTimeout(() => drawLine(250, 225, 300, 250), 250);   
-setTimeout(() => drawLine(300, 250, 250, 275), 450);  
-setTimeout(() => drawLine(250, 275, 200, 250), 650);   
-setTimeout(() => drawLine(200, 250, 250, 225), 850);  
+    // bottom face
+    setTimeout(() => drawLine(cx, cy-H/2, cx+L, cy), 250);   
+    setTimeout(() => drawLine(cx+L, cy, cx, cy+H/2), 450);  
+    setTimeout(() => drawLine(cx, cy+H/2, cx-L, cy), 650);   
+    setTimeout(() => drawLine(cx-L, cy, cx, cy-H/2), 850);  
 
+    // top face
+    setTimeout(() => drawLine(cx, cy-H/2-W, cx+L, cy-W), 1000);  
+    setTimeout(() => drawLine(cx+L, cy-W, cx, cy+H/2-W), 1200);   
+    setTimeout(() => drawLine(cx, cy+H/2-W, cx-L, cy-W), 1400);   
+    setTimeout(() => drawLine(cx-L, cy-W, cx, cy-H/2-W), 1600);  
 
-setTimeout(() => drawLine(250, 160, 300, 185), 1000);  
-setTimeout(() => drawLine(300, 185, 250, 210), 1200);   
-setTimeout(() => drawLine(250, 210, 200, 185), 1400);   
-setTimeout(() => drawLine(200, 185, 250, 160), 1600);  
+    // vertical connections
+    setTimeout(() => drawLine(cx-L, cy-W, cx-L, cy), 1800); 
+    setTimeout(() => drawLine(cx, cy-H/2-W, cx, cy+H/2), 2000);  
+    setTimeout(() => drawLine(cx+L, cy-W, cx+L, cy), 2200);  
 
-
-setTimeout(() => drawLine(200, 185, 200, 250), 1800); 
-setTimeout(() => drawLine(250, 160, 250, 275), 2000);  
-setTimeout(() => drawLine(300, 185, 300, 250), 2200);  
-
-setTimeout(() => { _isAnimating = false; }, 2400);
+    setTimeout(() => { _isAnimating = false; }, 2400);
 }
 
 function hideCube(){
-clearCanvas();
+    clearCanvas();
 }
 
 window.toggleDiamonds = function(){
-if (_isAnimating) return _cubeShown;
-_cubeShown = !_cubeShown;
-if (_cubeShown) {
-animateCube();
-} else {
-hideCube();
-}
-return _cubeShown;
+    if (_isAnimating) return _cubeShown;
+    _cubeShown = !_cubeShown;
+    if (_cubeShown) {
+        animateCube();
+    } else {
+        hideCube();
+    }
+    return _cubeShown;
 };
 
 clearCanvas();
 
-        document.getElementById('toggleBtn').onclick = function(){
-            var isShown = window.toggleDiamonds();
-            this.textContent = isShown ? 'Hide Cube' : 'Generate Cube';
-        };
+document.getElementById('toggleBtn').onclick = function(){
+    var isShown = window.toggleDiamonds();
+    this.textContent = isShown ? 'Hide Cube' : 'Generate Cube';
+};
+
+// update cube values when input changes
+document.getElementById('lenInput').oninput = function(){ cubeLength = parseInt(this.value)||100; };
+document.getElementById('heightInput').oninput = function(){ cubeHeight = parseInt(this.value)||50; };
+document.getElementById('widthInput').oninput = function(){ cubeWidth = parseInt(this.value)||50; };
     </script>
 </body>
 </html>
-
-

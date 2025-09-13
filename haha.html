@@ -16,8 +16,7 @@ const ctx = canvas.getContext('2d');
 
 var _cubeShown = false;
 var _isAnimating = false;
-
-// new adjustable values
+        
 var cubeLength = 100;
 var cubeHeight = 50;
 var cubeWidth  = 50;
@@ -40,22 +39,22 @@ function animateCube(){
     _isAnimating = true;
     clearCanvas();
 
-    let cx = 250, cy = 250; // center
+    let cx = 250, cy = 250; 
     let L = cubeLength/2, H = cubeHeight, W = cubeWidth/2;
 
-    // bottom face
+    
     setTimeout(() => drawLine(cx, cy-H/2, cx+L, cy), 250);   
     setTimeout(() => drawLine(cx+L, cy, cx, cy+H/2), 450);  
     setTimeout(() => drawLine(cx, cy+H/2, cx-L, cy), 650);   
     setTimeout(() => drawLine(cx-L, cy, cx, cy-H/2), 850);  
 
-    // top face
+    
     setTimeout(() => drawLine(cx, cy-H/2-W, cx+L, cy-W), 1000);  
     setTimeout(() => drawLine(cx+L, cy-W, cx, cy+H/2-W), 1200);   
     setTimeout(() => drawLine(cx, cy+H/2-W, cx-L, cy-W), 1400);   
     setTimeout(() => drawLine(cx-L, cy-W, cx, cy-H/2-W), 1600);  
 
-    // vertical connections
+    
     setTimeout(() => drawLine(cx-L, cy-W, cx-L, cy), 1800); 
     setTimeout(() => drawLine(cx, cy-H/2-W, cx, cy+H/2), 2000);  
     setTimeout(() => drawLine(cx+L, cy-W, cx+L, cy), 2200);  
@@ -85,10 +84,11 @@ document.getElementById('toggleBtn').onclick = function(){
     this.textContent = isShown ? 'Hide Cube' : 'Generate Cube';
 };
 
-// update cube values when input changes
+
 document.getElementById('lenInput').oninput = function(){ cubeLength = parseInt(this.value)||100; };
 document.getElementById('heightInput').oninput = function(){ cubeHeight = parseInt(this.value)||50; };
 document.getElementById('widthInput').oninput = function(){ cubeWidth = parseInt(this.value)||50; };
     </script>
 </body>
 </html>
+
